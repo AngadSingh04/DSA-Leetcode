@@ -24,6 +24,5 @@ public:
 int main(){
     Solution s;
     int a = 515;
-    // cin >> a;
     cout << s.isPalindrome(a);  
 }
