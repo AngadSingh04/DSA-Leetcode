@@ -13,5 +13,3 @@ public:
         return ans;
     }
 };
-
-// you can add this to reduce runtime speed :)
