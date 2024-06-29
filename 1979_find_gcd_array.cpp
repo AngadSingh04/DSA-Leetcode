@@ -1,3 +1,7 @@
+#include<iostream>
+#include<vector>
+using namespace std;
+
 class Solution {
 public:
     int findGCD(vector<int>& nums) {
@@ -14,3 +18,12 @@ public:
         return ans;
     }
 };
+int main(){
+    vector<int> myarr;
+    myarr.push_back(2);
+    myarr.push_back(3);
+    myarr.push_back(7);
+    myarr.push_back(10);
+
+    return 0;
+}
