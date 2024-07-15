@@ -8,3 +8,4 @@ public:
         return result;
     }
 };
+// 0ms runtime :)
