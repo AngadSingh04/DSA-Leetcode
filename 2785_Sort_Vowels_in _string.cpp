@@ -9,7 +9,7 @@ public:
     }
     string sortVowels(string s) {
         vector<int> v;
-        for(int i = 0; i < s.length(); i++){
+        for(int i = 0; i < s.length(); i++){709
             if(isVowel(s[i])){
                 v.push_back(s[i]);
             }
