@@ -1,25 +1,26 @@
 class Solution {
 public:
     int rev(int x){
-        string a = "";
+        int a = 0;
         while(x > 0){
-            string rem = to_string(x%10);
-            a += rem;
+            int rem = x%10;
+            a = a * 10 + rem;
             x /=10;
         }
-        int b = stoi(a);
-        return b;
+        return a;
     }
     int countNicePairs(vector<int>& nums) {
         int n = nums.size();
-        int count = 0;
+        long long count = 0;
         unordered_map<int,int> np;
+        int M = 1000000007;
         for(int i = 0; i < n; i++){
-            if(np.find(nums[i]-rev(nums[i])) != np.end()){
-                count += np[nums[i]-rev(nums[i])];
+            int K = nums[i] - rev(nums[i]);
+            if(np.find(K) != np.end()){
+                count = (count + np[K])%M;
             }
-            np[nums[i]-rev(nums[i])]++;
+            np[K]++;
         }
-        return count % 1000000007;
+        return count;
     }
 };
