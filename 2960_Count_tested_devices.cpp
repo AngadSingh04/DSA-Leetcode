@@ -1,4 +1,4 @@
-lass Solution {
+class Solution {
 public:
     int countTestedDevices(vector<int>& batteryPercentages) {
         int count = 0;
@@ -14,3 +14,19 @@ public:
         return count;
     }
 };
+
+//
+class Solution{
+    public:
+        int countTestedDevices(vector<int>& batteryPercentages) {
+        int count = 0;
+        int b = batteryPercentages.size();
+        for(int i = 0; i < b; i++){
+            if(batteryPercentages[i] > count){
+                count++;
+            }
+        }
+        return count;
+    }
+};
+
