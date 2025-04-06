@@ -1,40 +1,68 @@
 class Solution {
-public:
-    vector<int> findMissingAndRepeatedValues(vector<vector<int>>& grid) {
-        unordered_map<int,int> um;
-        vector<int> a;
-        for(int i = 0; i < grid.size(); i++){
-            for(int j = 0; j < grid[i].size(); j++){
-                a.push_back(grid[i][j]);
+    public:
+        static vector<int> findMissingAndRepeatedValues(vector<vector<int>>& grid) {
+            int n = grid.size();
+            int m = grid[0].size();
+    
+            int xr = 0;
+            int count = 0;
+            for(int i = 0; i < n; i++){
+                for(int j = 0; j < m; j++){
+                    count++;
+                }
             }
-        }
-        vector<int> ans(2,0);
-        for(int i = 0; i < a.size(); i++){
-            um[a[i]]++;
-            if(um[a[i]] == 2){
-                ans[0]=a[i];
+    
+            for(int i = 0; i < n; i++){
+                for(int j = 0; j < m; j++){
+                    xr = xr ^ grid[i][j];
+                }
             }
-        }
-        sort(a.begin(), a.end());
-        int max_element = a[a.size()-1];
-        unordered_set<int> us(a.begin(),a.end());
-        for(int i = 1; i <= max_element; i++){
-            if(us.find(i)==us.end()){
-                ans[1] = i;
+            for(int i = 1; i <= count; i++) {
+                xr ^= i;
             }
+    
+            int bitNo = 0;
+            while(1){
+                if((xr & (1 << bitNo))!=0){
+                    break;
+                }else{
+                    bitNo++;
+                }
+            }
+    
+            int zero = 0;
+            int one = 0;
+    
+            for(int i = 0; i < n; i++){
+                for(int j = 0; j < m; j++){
+                    if((grid[i][j] & (1 << bitNo))!=0){
+                        one = one^grid[i][j];
+                    }else{
+                        zero = zero^grid[i][j];
+                    }
+                }
+            }
+    
+            for(int i = 1; i <= count; i++){
+                if((i & (1 << bitNo))!=0){
+                    one = one^i;
+                }else{
+                    zero = zero^i;
+                }
+            }
+            int ans = 0;
+            for(int i = 0; i < n; i++){
+                for(int j = 0; j < m; j++){
+                    if(grid[i][j] == zero){
+                        ans++;
+                    }
+                }
+            }
+            if(ans==2){
+                return {zero,one};
+            }else{
+                return {one,zero};
+            }
+    
         }
-        if(ans[1] == 0){
-            if(us.find(max_element+1)==us.end()){
-            ans[1]=max_element+1;
-        }
-        }
-        
-        return ans;
-    }
-};
-auto fast_io = [] () {
-    ios::sync_with_stdio(false);
-    cin.tie(nullptr);
-    cout.tie(nullptr);
-    return nullptr;
-} ();
+    };
