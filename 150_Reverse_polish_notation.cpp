@@ -1,36 +1,35 @@
-// Medium level problem :)
 class Solution {
 public:
     int evalRPN(vector<string>& tokens) {
         stack<int> st;
         for(int i = 0; i < tokens.size(); i++){
-            if(tokens[i] != "+" && tokens[i] != "-" && tokens[i] != "*" && tokens[i] != "/"){
-                int a = stoi(tokens[i]);
-                st.push(a);
+            if(tokens[i] != "+" && tokens[i] != "-" && tokens[i] != "*" && tokens[i] != "/" ){
+                int num = stoi(tokens[i]);
+                st.push(num);
             }else if(tokens[i] == "+"){
-                int a_add = st.top();
+                int a = st.top();
                 st.pop();
-                int b_add = st.top();
+                int b = st.top();
                 st.pop();
-                st.push(a_add + b_add);
+                st.push(a+b);
             }else if(tokens[i] == "-"){
-                int a_subtract = st.top();
+                int a = st.top();
                 st.pop();
-                int b_subtract = st.top();
+                int b = st.top();
                 st.pop();
-                st.push(b_subtract - a_subtract);
+                st.push(b-a);
             }else if(tokens[i] == "*"){
-                int a_multiply = st.top();
+                int a = st.top();
                 st.pop();
-                int b_multiply = st.top();
+                int b = st.top();
                 st.pop();
-                st.push(a_multiply * b_multiply);
+                st.push(a*b);
             }else if(tokens[i] == "/"){
-                int a_divide = st.top();
+                int a = st.top();
                 st.pop();
-                int b_divide = st.top();
+                int b = st.top();
                 st.pop();
-                st.push(b_divide / a_divide);
+                st.push(b/a);
             }
         }
         return st.top();
