@@ -1,28 +1,22 @@
 class Solution {
-    public:
-        string countAndSay(int n) {
-            string result = "1";
-            for (int i = 1; i < n; ++i) {
-                result = describe(result);
-            }
-            return result;
+public:
+    string countAndSay(int n) {
+        if(n==1){
+            return "1";
         }
-    
-    private:
-        string describe(const string& s) {
-            string res = "";
+        string str = countAndSay(n-1);
+        string result = "";
+        for(int i = 0; i < str.size(); i++){
+            char ch = str[i];
             int count = 1;
-    
-            for (int i = 1; i < s.length(); ++i) {
-                if (s[i] == s[i - 1]) {
-                    count++;
-                } else {
-                    res += to_string(count) + s[i - 1];
-                    count = 1;
-                }
+
+            while(i < str.size()-1 && str[i]==str[i+1]){
+                count++;
+                i++;
             }
-    
-            res += to_string(count) + s.back();
-            return res;
+
+            result += to_string(count) + string(1,ch);
         }
-    };
+        return result;
+    }
+};
