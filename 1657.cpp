@@ -12,7 +12,7 @@ public:
             int a = word1[i] - 'a';
             vc1[a]++;
             int b = word2[i] - 'a';
-            vc2[a]++;
+            vc2[b]++;
         }
 
         for(int i = 0; i < vc1.size(); i++){
