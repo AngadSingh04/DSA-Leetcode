@@ -1,55 +1,50 @@
 /**
  * Definition for singly-linked list.
- * public class ListNode {
+ * struct ListNode {
  *     int val;
- *     ListNode next;
- *     ListNode() {}
- *     ListNode(int val) { this.val = val; }
- *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
- * }
+ *     ListNode *next;
+ *     ListNode() : val(0), next(nullptr) {}
+ *     ListNode(int x) : val(x), next(nullptr) {}
+ *     ListNode(int x, ListNode *next) : val(x), next(next) {}
+ * };
  */
 class Solution {
-    public void reorderList(ListNode head) {
-        if(head == null || head.next == null){
-            return;
+public:
+    ListNode* revR(ListNode* head){
+        ListNode* curr = head;
+        ListNode* nxt = NULL;
+        ListNode* prev = NULL;
+
+        while(curr!=NULL){
+            nxt = curr->next;
+            curr->next = prev;
+            prev = curr;
+            curr = nxt;
+        }
+        return prev;
+    }
+    void reorderList(ListNode* head) {
+        ListNode* slow = head;
+        ListNode* fast = head;
+
+        while(fast!=NULL && fast->next!=NULL){
+            fast = fast->next->next;
+            slow = slow->next;
         }
 
-        ListNode fast = head;
-        ListNode slow = head;
-        while(fast != null && fast.next != null){
-            fast = fast.next.next;
-            slow = slow.next;
-        }
+        ListNode* sh = revR(slow->next);
+        slow->next = NULL;
+        ListNode* fh = head;
 
-        ListNode sh = reverseList(slow.next);
-        slow.next = null;
-        ListNode fh = head;
+        while(sh!=NULL){
+            ListNode* temp1 = fh->next;
+            ListNode* temp2 = sh->next;
 
-        while(sh != null){
-            ListNode temp1 = fh.next;
-            ListNode temp2 = sh.next;
-            fh.next = sh;
-            sh.next = temp1;
+            fh->next = sh;
+            sh->next = temp1;
 
             fh = temp1;
             sh = temp2;
         }
-
     }
-
-    public ListNode reverseList(ListNode head){
-
-        ListNode nxt = null;
-        ListNode pre = null;
-        ListNode curr = head;
-
-        while(curr != null){
-            nxt = curr.next;
-            curr.next = pre;
-            pre = curr;
-            curr = nxt;
-        }
-
-        return pre;
-    }
-}
+};
