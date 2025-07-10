@@ -1,54 +1,51 @@
 /**
  * Definition for singly-linked list.
- * public class ListNode {
+ * struct ListNode {
  *     int val;
- *     ListNode next;
- *     ListNode() {}
- *     ListNode(int val) { this.val = val; }
- *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
- * }
+ *     ListNode *next;
+ *     ListNode() : val(0), next(nullptr) {}
+ *     ListNode(int x) : val(x), next(nullptr) {}
+ *     ListNode(int x, ListNode *next) : val(x), next(next) {}
+ * };
  */
 class Solution {
-    public boolean isPalindrome(ListNode head) {
-        if(head == null || head.next == null){
-            return true;
-        }
+public:
+    ListNode* revR(ListNode* head){
+        ListNode* curr = head;
+        ListNode* prev = NULL;
+        ListNode* nxt = NULL;
 
-        ListNode fast = head;
-        ListNode slow = head;
-
-        while(fast != null && fast.next != null){
-            slow = slow.next;
-            fast = fast.next.next;
-        }
-
-        ListNode sh = reverseList(slow);
-        ListNode fh = head;
-
-        while(sh != null){
-            if(fh.val != sh.val){
-                return false;
-            }
-            fh =fh.next;
-            sh = sh.next;
-        }
-
-        return true;
-    }
-
-    public ListNode reverseList(ListNode head){
-
-        ListNode nxt = null;
-        ListNode pre = null;
-        ListNode curr = head;
-
-        while(curr != null){
-            nxt = curr.next;
-            curr.next = pre;
-            pre = curr;
+        while(curr!=NULL){
+            nxt = curr->next;
+            curr->next = prev;
+            prev = curr;
             curr = nxt;
         }
 
-        return pre;
+        return prev;
     }
-}
+    bool isPalindrome(ListNode* head) {
+        ListNode* slow = head;
+        ListNode* fast = head;
+
+        while(fast!=NULL && fast->next != NULL){
+            fast = fast->next->next;
+            slow = slow->next;
+        }
+
+        ListNode* sh = revR(slow);
+        ListNode* fh = head;
+
+        while(sh!=NULL){
+            if(sh->val != fh->val){
+                return false;
+            }
+            sh = sh->next;
+            fh = fh->next;
+        }
+
+        return true;
+
+
+    }
+};
