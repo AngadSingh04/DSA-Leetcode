@@ -1,33 +1,55 @@
 /**
  * Definition for singly-linked list.
- * public class ListNode {
+ * struct ListNode {
  *     int val;
- *     ListNode next;
- *     ListNode(int x) {
- *         val = x;
- *         next = null;
- *     }
- * }
+ *     ListNode *next;
+ *     ListNode(int x) : val(x), next(NULL) {}
+ * };
  */
-public class Solution {
-    public ListNode getIntersectionNode(ListNode headA, ListNode headB) {
-        ListNode l1 = headA;
-        ListNode l2 = headB;
+class Solution {
+public:
+    ListNode *getIntersectionNode(ListNode *headA, ListNode *headB) {
+        ListNode* temp1 = headA;
+        ListNode* temp2 = headB;
+        int count1 = 0;
+        int count2 = 0;
 
-        while(l1!=l2){
-            if(l1 != null){
-                l1 = l1.next;
-            }else{
-                l1 = headB;
+        while(temp1!=NULL){
+            count1++;
+            temp1 = temp1->next;
+        }
+
+        while(temp2!=NULL){
+            count2++;
+            temp2 = temp2->next;
+        }
+        
+        temp1 = headA;
+        temp2 = headB;
+
+        int ind = abs(count1-count2);
+
+        if(count1>count2){
+            while(ind > 0){
+                temp1 = temp1->next;
+                ind--;
             }
-
-            if(l2 != null){
-                l2 = l2.next;
-            }else{
-                l2 = headA;
+        }else{
+            while(ind > 0){
+                temp2 = temp2->next;
+                ind--;
             }
         }
 
-        return l2;
+        while(temp1!=NULL && temp2!=NULL){
+            if(temp1 == temp2){
+                return temp1;
+            }
+            temp1 = temp1->next;
+            temp2 = temp2->next;
+        }
+
+        return NULL;
+
     }
-}
+};
