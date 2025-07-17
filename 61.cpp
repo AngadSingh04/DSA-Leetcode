@@ -1,34 +1,38 @@
 /**
  * Definition for singly-linked list.
- * public class ListNode {
+ * struct ListNode {
  *     int val;
- *     ListNode next;
- *     ListNode() {}
- *     ListNode(int val) { this.val = val; }
- *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
- * }
+ *     ListNode *next;
+ *     ListNode() : val(0), next(nullptr) {}
+ *     ListNode(int x) : val(x), next(nullptr) {}
+ *     ListNode(int x, ListNode *next) : val(x), next(next) {}
+ * };
  */
 class Solution {
-    public ListNode rotateRight(ListNode head, int k) {
-        if(head == null || head.next == null || k==0){
+public:
+    ListNode* rotateRight(ListNode* head, int k) {
+        if(head == NULL || head->next == NULL){
             return head;
         }
 
-        ListNode temp = head;
+        ListNode* tmp = head;
         int count = 1;
-        while(temp.next != null){
-            temp = temp.next;
-            count=count+1;
+        while(tmp->next!=NULL){
+            tmp = tmp ->next;
+            count++;
         }
-        temp.next = head;
-        int st = count - (k%count);
-        ListNode ntail = temp;
-        while(st != 0){
-            ntail = ntail.next;
-            st = st - 1;
+        tmp->next = head;
+
+        int rem_rotations = count - (k%count);
+        ListNode* tail = tmp;
+        while(rem_rotations != 0){
+            tail = tail->next;
+            rem_rotations--;
         }
-        ListNode nhead = ntail.next;
-        ntail.next = null;
-        return nhead;
+
+        ListNode* newHead = tail->next;
+        tail->next = NULL;
+        return newHead;
+        
     }
-}
+};
