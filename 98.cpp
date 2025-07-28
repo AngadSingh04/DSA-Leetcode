@@ -16,19 +16,18 @@ public:
         if(root == NULL){
             return true;
         }
-
         if(root->val <= minV || root->val >= maxV){
             return false;
         }
-
         return isValid(root->left,minV,root->val) && isValid(root->right,root->val,maxV);
     }
 
     bool isValidBST(TreeNode* root) {
-
+        if(root == NULL){
+            return true;
+        }
         long minV = LONG_MIN;
         long maxV = LONG_MAX;
-
         return isValid(root,minV,maxV);
     }
 };
