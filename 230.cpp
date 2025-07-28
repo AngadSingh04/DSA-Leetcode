@@ -17,6 +17,7 @@ public:
             return;
         }
         smallestNode(root->left,count,k,ans);
+        
         count++;
         if(count == k){
             ans = root->val;
