@@ -12,18 +12,29 @@
 class Solution {
 public:
 
-    TreeNode* createTree(vector<int>& preorder, int start, int end){
-        if(start > end){
+    // TreeNode* createTree(vector<int>& preorder, int start, int end){
+    //     if(start > end){
+    //         return NULL;
+    //     }
+    //     TreeNode* root = new TreeNode(preorder[start]);
+    //     int rightStart = start+1;
+    //     while(rightStart <= end && preorder[rightStart] < preorder[start]){
+    //         rightStart++;
+    //     }
+
+    //     root->left = createTree(preorder,start+1,rightStart-1);
+    //     root->right = createTree(preorder,rightStart, end);
+
+    //     return root;
+    // }
+
+    TreeNode* createTree(vector<int>& preorder,int& i, int& bound){
+        if(i >= preorder.size() || preorder[i] > bound){
             return NULL;
         }
-        TreeNode* root = new TreeNode(preorder[start]);
-        int rightStart = start+1;
-        while(rightStart <= end && preorder[rightStart] < preorder[start]){
-            rightStart++;
-        }
-
-        root->left = createTree(preorder,start+1,rightStart-1);
-        root->right = createTree(preorder,rightStart, end);
+        TreeNode* root = new TreeNode(preorder[i++]);
+        root->left = createTree(preorder,i,root->val);
+        root->right = createTree(preorder,i,bound);
 
         return root;
     }
@@ -32,7 +43,9 @@ public:
         if(preorder.size() == 0){
             return NULL;
         }
-        return createTree(preorder,0,preorder.size()-1);
+        int i = 0;
+        int bound = INT_MAX;
+        return createTree(preorder,i,bound);
         
     }
 };
