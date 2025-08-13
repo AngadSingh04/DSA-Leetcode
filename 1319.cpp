@@ -44,7 +44,7 @@ class Solution {
             if(up_u == up_v){
                 return;
             }
-            if(rank[up_u] < rank[up_v]){
+            if(size[up_u] < size[up_v]){
                 parent[up_u] = up_v;
                 size[up_v] += size[up_u];
             }else{
