@@ -1,52 +1,44 @@
 class MinStack {
 public:
     int *arr;
+    int size = 1000;
     int to;
-    int size = 100000;
     MinStack() {
         arr = new int[size];
         to = -1;
-
     }
     
     void push(int val) {
         if(to == size-1){
             return;
-        }else{
-            to++;
-            arr[to] = val;
         }
-        
+        to++;
+        arr[to] = val;
     }
     
     void pop() {
         if(to == -1){
             return;
-        }else{
-            int ans = arr[to];
-            to--;
         }
-        
+        int ans = arr[to];
+        to--;
     }
     
     int top() {
         if(to == -1){
             return -1;
-        }else{
-            return arr[to];
         }
-        
+        return arr[to];
     }
     
     int getMin() {
-        int min_v = INT_MAX;
+        int minE = INT_MAX;
         for(int i = 0; i <= to; i++){
-            if(min_v > arr[i]){
-                min_v = arr[i];
+            if(minE > arr[i]){
+                minE = arr[i];
             }
         }
-        return min_v;
-        
+        return minE;
     }
 };
 
