@@ -1,28 +1,27 @@
 /**
  * Definition for singly-linked list.
- * public class ListNode {
+ * struct ListNode {
  *     int val;
- *     ListNode next;
- *     ListNode() {}
- *     ListNode(int val) { this.val = val; }
- *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
- * }
+ *     ListNode *next;
+ *     ListNode() : val(0), next(nullptr) {}
+ *     ListNode(int x) : val(x), next(nullptr) {}
+ *     ListNode(int x, ListNode *next) : val(x), next(next) {}
+ * };
  */
 class Solution {
-    public ListNode deleteDuplicates(ListNode head) {
-        if(head == null || head.next == null){
-            return head;
-        }
+public:
+    ListNode* deleteDuplicates(ListNode* head) {
+        ListNode* tmp = head;
 
-        ListNode curr = head;
-
-        while(curr != null && curr.next != null){
-            if(curr.val == curr.next.val){
-                curr.next = curr.next.next;
+        while(tmp!=NULL && tmp->next!=NULL){
+            if(tmp->val == tmp->next->val){
+                tmp->next = tmp->next->next;
+                // tmp = tmp->next;
             }else{
-                curr = curr.next;
+                tmp = tmp->next;
             }
         }
+
         return head;
     }
-}
+};
