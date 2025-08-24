@@ -1,6 +1,6 @@
 class Solution {
 public:
-    int bfss(queue<pair<pair<int,int>,int>>& q, vector<vector<int>>& grid, vector<vector<int>>& vs, int temp){
+    int bfss(queue<pair<pair<int,int>,int>>& q, vector<vector<int>>& grid, int count){
 
         int n = grid.size();
         int m = grid[0].size();
@@ -8,20 +8,21 @@ public:
         while(!q.empty()){
             int r = q.front().first.first;
             int c = q.front().first.second;
-            int tmp = q.front().second;
+            int cnt = q.front().second;
             q.pop();
 
             int dr[] = {-1,1,0,0};
             int dc[] = {0,0,-1,1};
-            // int temp = temp+1;
+
             for(int i = 0; i < 4; i++){
                 int rowN = r + dr[i];
                 int colN = c + dc[i];
 
                 if(rowN >= 0 && rowN < n && colN >= 0 && colN < m && grid[rowN][colN] == 1){
                     grid[rowN][colN] = 2;
-                    q.push({{rowN,colN},tmp+1});
-                    temp = tmp;
+                    // vc[rowN][colN] = 1;
+                    q.push({{rowN,colN}, cnt+1});
+                    count = cnt+1;
                 }
             }
         }
@@ -34,45 +35,41 @@ public:
             }
         }
 
-        return temp+1;
-
+        return count;
     }
     int orangesRotting(vector<vector<int>>& grid) {
+        int n = grid.size();
+        int m = grid[0].size();
 
-        int row = grid.size();
-        int cols = grid[0].size();
-        int count = 0;
 
-        bool isThere = false;
+        bool isPresent = false;
 
-        for(int i = 0; i < row; i++){
-            for(int j = 0; j < cols; j++){
+        for(int i = 0; i < n; i++){
+            for(int j = 0; j < m; j++){
                 if(grid[i][j] == 1){
-                    isThere = true;
+                    isPresent = true;
                 }
             }
         }
-
-        if(!isThere){
+        
+        if(!isPresent){
             return 0;
         }
 
-        
-
-        vector<vector<int>> vs(row, vector<int>(cols,0));
+        // vector<vector<int>> vc(n, vector<int>(m,0));
         queue<pair<pair<int,int>,int>> q;
 
-        for(int i = 0; i < row; i++){
-            for(int j = 0; j < cols; j++){
+        for(int i = 0; i < n; i++){
+            for(int j = 0; j < m; j++){
                 if(grid[i][j] == 2){
                     q.push({{i,j},0});
+                    // vc[i][j] = 1;
                 }
             }
         }
-
-        int ans = bfss(q, grid, vs,0);
+        int count = 0;
+        int ans = bfss(q, grid, count);
 
         return ans;
-        
     }
 };
