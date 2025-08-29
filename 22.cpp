@@ -1,39 +1,28 @@
 class Solution {
 public:
-    vector<string> vc;
-    bool isValid(string s){
-        stack<char> st;
-        for(int i = 0; i < s.size(); i++){
-            if(s[i] == '('){
-                st.push(s[i]);
-            }else{
-                if(st.empty()){
-                    return false;
-                   }
-                st.pop();
-            }
-        }
-        return st.empty();
-    }
-    void gPar(string& s, int n){
+    void getPar(int n, string s, vector<string>& ans, int o, int c){
         if(s.size() == 2*n){
-            if(isValid(s)){
-                vc.push_back(s);
-            }
+            ans.push_back(s);
             return;
         }
-        s.push_back('(');
-        gPar(s,n);
-        s.pop_back();
-
-        s.push_back(')');
-        gPar(s,n);
-        s.pop_back();
-
+        if(o < n){
+            s.push_back('(');
+            getPar(n,s,ans,o+1,c);
+            s.pop_back();
+        }
+        if(o > c){
+            s.push_back(')');
+            getPar(n,s,ans,o,c+1);
+            s.pop_back();
+        }
     }
     vector<string> generateParenthesis(int n) {
+        int o = 0;
+        int c = 0;
+
+        vector<string> ans;
         string s = "";
-        gPar(s,n);
-        return vc;
+        getPar(n, s, ans, o , c);
+        return ans;
     }
 };
