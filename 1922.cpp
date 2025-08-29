@@ -1,24 +1,24 @@
 class Solution {
 public:
-    long long MOD = 1000000007;
-    long long powerN(long long x, long long n){
-        if(n==0){
+    int MOD = 1e9 + 7;
+    int getPow(long long n, long p){
+        if(p == 0){
             return 1;
         }
-        x = x%MOD;
-        if(n%2==0){
-            long long half = powerN(x,n/2);
-            return (half*half)%MOD;
+        if(p%2 == 0){
+            long long tmp = (n*n)%MOD;
+            return getPow(tmp, p/2);
         }else{
-            long long half = powerN(x,(n-1)/2);
-            return (x*((half*half)%MOD))%MOD;
+            long long  tmp = (n*n)%MOD;
+            return (n*getPow(tmp, (p-1)/2))%MOD;
         }
     }
-
     int countGoodNumbers(long long n) {
-        long long even = (n+1)/2;
-        long long odd = n/2;
+        long long eInd = (n+1)/2;
+        long long oInd = n/2;
 
-        return powerN(5,even)*powerN(4,odd)%MOD;
+        int getEven = getPow(5, (long)eInd) ;
+        int getOdd = getPow(4, (long)oInd);
+        return ((long long)getEven * getOdd)%MOD;
     }
 };
