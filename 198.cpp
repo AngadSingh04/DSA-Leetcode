@@ -21,3 +21,30 @@ public:
         return getSum(nums, ind, dp);
     }
 };
+
+// tabulation
+
+class Solution {
+public:
+    int getSum(vector<int>& nums, int ind, vector<int>& dp){
+        dp[0] = nums[0];
+        
+        for(int i = 1; i < nums.size(); i++){
+            int pick = nums[i];
+            if(i > 1){
+                pick += dp[i-2];
+            }
+            int nPick = dp[i-1];
+
+            dp[i] = max(pick, nPick);
+        }
+
+        return dp[ind];
+    }
+    int rob(vector<int>& nums) {
+        int ind = nums.size() - 1;
+        vector<int> dp(nums.size(), -1);
+
+        return getSum(nums, ind, dp);
+    }
+};
