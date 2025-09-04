@@ -1,46 +1,38 @@
 class Solution {
-    public:
-        bool solve(int idx, vector<int>& nums, int target, vector<vector<int>>& dp) {
-    
-            if (target == 0)
-                return true;
-    
-    
-            if (idx == 0) {
-                return nums[0] == target;
-            }
-    
-    
-            if (dp[idx][target] != -1) {
-                return dp[idx][target];
-            }
-    
-            int not_take = solve(idx - 1, nums, target, dp);
-    
-    
-            int take = false;
-            if (nums[idx] <= target) {
-                take = solve(idx - 1, nums, target - nums[idx], dp);
-            }
-    
-    
-            return dp[idx][target] = take || not_take;
+  public:
+    bool getTrue(int n, int sum, vector<int>& arr, vector<vector<int>>& dp){
+        if(sum == 0){
+            return true;
         }
-    
-        bool canPartition(vector<int>& nums) {
-            int sum = 0;
-            int n = nums.size();
-    
-            for (int i = 0; i < nums.size(); i++) {
-                sum += nums[i];
-            }
-    
-            if (sum % 2 == 1)
-                return false;
-    
-            int target = sum / 2;
-            vector<vector<int>> dp(n + 1, vector<int>(target + 1, -1));
-    
-            return solve(n - 1, nums, target, dp);
+        if(n == 0){
+            return (arr[0] == sum);
         }
-    };
+        
+        if(dp[n][sum] != -1){
+            return dp[n][sum];
+        }
+        
+        bool pick = false;
+        if(arr[n] <= sum){
+            pick = getTrue(n-1, sum - arr[n], arr,dp);
+        }
+        bool nPick = getTrue(n-1,sum,arr,dp);
+        
+        return dp[n][sum] = pick || nPick;
+    }
+    bool equalPartition(vector<int>& arr) {
+        // code here
+        int n = arr.size();
+        int sum = 0;
+        for(int i = 0; i < n; i++){
+            sum += arr[i];
+        }
+        
+        if(sum%2 == 1){
+            return false;
+        }
+        vector<vector<int>> dp(n, vector<int>(sum+1, -1));
+        
+        return getTrue(n-1, sum/2, arr,dp);
+    }
+};
