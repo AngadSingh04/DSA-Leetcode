@@ -17,6 +17,8 @@ public:
         vector<int> post;
         vector<int> in;
 
+        if (!root) return in;
+
         stack<pair<TreeNode*, int>> st;
         st.push({root, 1});
 
@@ -24,18 +26,18 @@ public:
             auto p = st.top();
             if(p.second == 1){
                 st.top().second++;
-                pre.push_back(p.first->data);
+                pre.push_back(p.first->val);
                 if(p.first->left){
                     st.push({p.first->left, 1});
                 }
             }else if(p.second == 2){
                 st.top().second++;
-                in.push_back(p.first->data);
+                in.push_back(p.first->val);
                 if(p.first->right){
-                    st.push({p.first->left, 1});
+                    st.push({p.first->right, 1});
                 }
             }else{
-                post.push_back({p.first->data});
+                post.push_back({p.first->val});
                 st.pop();
             }
         }
