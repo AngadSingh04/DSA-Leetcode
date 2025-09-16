@@ -15,65 +15,63 @@ public:
         if(root == NULL){
             return "";
         }
-        string ans = "";
+        string s = "";
         queue<TreeNode*> q;
         q.push(root);
-
         while(!q.empty()){
-            TreeNode* tmp = q.front();
+            auto p = q.front();
             q.pop();
 
-            if(tmp){
-                ans += to_string(tmp->val)+',';
-                q.push(tmp->left);
-                q.push(tmp->right);
+            if(p==NULL){
+                s.append("null,");
             }else{
-                ans += "null,";
+                s.append(to_string(p->val) + ',');
+            }
+            if(p != NULL){
+                q.push(p->left);
+                q.push(p->right);
             }
         }
-        string result = ans.substr(0,ans.size()-1);
-        return result;
-        
+
+        return s.substr(0, s.size()-1);
     }
 
     // Decodes your encoded data to tree.
     TreeNode* deserialize(string data) {
-
-        if(data == ""){
+        if(data.size() == 0){
             return NULL;
         }
-        stringstream ss(data);
+        stringstream s(data);
         string str;
-        getline(ss, str, ',');
-        TreeNode* root = new TreeNode(stoi(str));
+        getline(s, str, ',');
         queue<TreeNode*> q;
+        TreeNode* root = new TreeNode(stoi(str));
         q.push(root);
 
         while(!q.empty()){
-            TreeNode* tmp = q.front();
+            auto p = q.front();
             q.pop();
 
-            getline(ss,str,',');
+            getline(s, str, ',');
             if(str == "null"){
-                tmp->left = NULL;
+                p->left = NULL;
             }else{
-                TreeNode* node = new TreeNode(stoi(str));
-                tmp->left = node;
-                q.push(node);
+                TreeNode* tmp = new TreeNode(stoi(str));
+                p->left = tmp;
+                q.push(tmp);
             }
 
-            getline(ss,str,',');
+            getline(s,str,',');
             if(str == "null"){
-                tmp->right = NULL;
+                p->right = NULL;
             }else{
-                TreeNode* node = new TreeNode(stoi(str));
-                tmp->right = node;
-                q.push(node);
+                TreeNode* tmp = new TreeNode(stoi(str));
+                p->right = tmp;
+                q.push(tmp);
             }
         }
 
         return root;
-        
     }
 };
 
